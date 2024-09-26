@@ -1,0 +1,83 @@
+<div class="h-full w-full flex flex-col">
+    <app-header></app-header>
+
+    <!-- Contenedor principal -->
+    <div class="w-full h-full flex overflow-y-scroll">
+
+        <!-- Contenedor Productos -->
+        <div class="w-3/4 px-8 py-4 grid grid-cols-3 gap-4 border border-l-transparent border-r-orange-500 overflow-y-scroll" *ngIf="listaProductos.length > 0">            
+            <!-- Producto -->
+            <button class="h-[180px] flex flex-col items-center justify-center bg-orange-400/90 text-white hover:bg-orange-400 transition-all" 
+            *ngFor="let producto of listaProductos" (click)="agregarProducto(producto)">
+                <h1 class="text-2xl mb-2">{{ producto.nombre }}</h1>
+                <p class="text-xl">${{ producto.costo }}</p>
+            </button>
+        </div>
+        
+        
+        <!-- Contenedor Productos Cargando -->
+        <div class="w-3/4 p-4 grid grid-cols-3 gap-4 border border-r-orange-500 overflow-y-scroll" *ngIf="listaProductos.length === 0">
+            <!-- Producto -->
+            <button class="h-[180px] flex flex-col items-center justify-center border border-orange-300 animate-pulse" *ngFor="let producto of loadingProductos">
+                <div class="w-1/2 h-6 bg-orange-300 rounded-full mb-4 animate-pulse"></div>
+                <div class="w-1/4 h-4 bg-orange-300 rounded-full animate-pulse"></div>
+            </button>
+        </div>
+
+
+        <!-- Contenedor Pedido -->
+        <div class="relative w-1/4 px-4 mt-2 text-xl flex flex-col justify-between gap-2">
+            <h1 class="pt-2 text-3xl text-orange-500 font-bold">Pedido</h1>
+
+            <!-- Contenedor Productos -->
+            <div class="h-full flex flex-col gap-4 overflow-y-scroll" *ngIf="pedido.length > 0">                
+                <!-- Producto -->
+                <div class="py-2 flex flex-col" *ngFor="let producto of productosPedido">
+                    <h1 class="py-1 text-xl font-semibold">{{ producto.nombre }}</h1>
+    
+                    <!-- Contenedor Cantidad -->
+                    <div class="flex justify-between">
+                        <p class="text-lg">Cantidad: </p>
+                        
+                        <!-- Boton cantidad -->
+                        <div class="flex items-center gap-4 text-lg">
+                            <button class="h-2/3 px-2 text-[rgb(194,65,12)] rounded-full" (click)="restarProducto(producto)">
+                                <img class="h-full" src="../../../assets/minus-icon.svg" alt="Quitar">
+                            </button>
+
+                            <p>{{ calcularCantidad(producto) }}</p>
+
+                            <button class="h-full px-2 text-[rgb(194,65,12)]" (click)="agregarProducto(producto)">
+                                <img class="h-2/3" src="../../../assets/add-icon.svg" alt="Agregar">
+                            </button>
+                        </div>
+                    </div>
+
+
+                    <!-- Contenedor precio por productos -->
+                    <div class="flex justify-between">
+                        <h1 class="text-lg">Precio &lpar;x{{calcularCantidad(producto)}}&rpar;:</h1>
+                        <p class="w-28 text-center">${{ (calcularCantidad(producto) * producto.costo).toFixed(2) }}</p>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <!-- Mensaje pedido vacío -->
+            <div class="h-full flex items-center justify-center" *ngIf="pedido.length === 0">
+                <h1 class="text-xl text-black/30 font-semibold">Agrega un producto para continuar</h1>
+            </div>
+
+            
+            <!-- Contenedor Total -->
+            <div class="py-4 px-2 flex justify-between text-2xl font-semibold border-t border-t-orange-500">
+                <h1>Total: </h1>
+                <h1 class="mr-4">${{ calcularTotal() }}</h1>
+            </div>
+            <button class="w-full mb-2 py-5 bg-orange-500 text-white font-bold text-2xl disabled:opacity-50 enabled:active:animate-shrink" 
+            (click)="tomarPedido()" [disabled]="pedido.length === 0">Tomar pedido</button>
+        </div>
+
+    </div>
+</div>
