@@ -1,7 +1,12 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Sistema_Hamburguesas_API",
+    "\\Sistema_Hamburguesas_API\\Controllers",
+    "\\Sistema_Hamburguesas_API\\Data",
+    "\\Sistema_Hamburguesas_API\\DTOs",
+    "\\Sistema_Hamburguesas_API\\Models"
   ],
-  "SelectedNode": "\\API_Pizzeria.sln",
+  "SelectedNode": "\\Sistema_Hamburguesas_API.sln",
   "PreviewInSolutionExplorer": false
 }

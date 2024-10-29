@@ -15,7 +15,7 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 export class MenuPedidosComponent implements OnInit {
   constructor(private ApiService: PizzeriaAPIService, private toastr: ToastrService, private router: Router) { }
 
-  ngOnInit(): void {    
+  ngOnInit(): void {
     let token = localStorage.getItem('token')?.toString();
     if(!token){
       this.toastr.error("Inicia sesion para continuar", "Acceso denegado");
@@ -40,7 +40,7 @@ export class MenuPedidosComponent implements OnInit {
       error: (error: HttpErrorResponse) => {
         this.toastr.error(error.message, 'Ha ocurrido un error');
         console.log(error);
-      } 
+      }
     })
   }
 
@@ -57,7 +57,7 @@ export class MenuPedidosComponent implements OnInit {
   pedido: IProducto[] = [];
   productosPedido: Set<IProducto> = new Set();
 
-  
+
   logOut(){
     localStorage.removeItem('token');
     this.router.navigateByUrl('login');
@@ -103,15 +103,17 @@ export class MenuPedidosComponent implements OnInit {
 
   // Guarda la venta y los detalles en la Base de Datos
   tomarPedido(){
+    console.log(this.usuario.numEmpleado);
     this.ApiService.crearVenta(this.usuario.numEmpleado).subscribe({
       next: () => {
+        console.log("pasa");
         // Creamos un detalle para agregar a la BD por cada producto dentro del pedido
         this.productosPedido.forEach(producto => {
           let detalle: IDetalleVenta = {
             IdProducto: producto.id,
             Cantidad: this.pedido.filter(p => p.id === producto.id).length
           }
-
+          console.log("Detalle: ", detalle)
           this.ApiService.crearDetalleVenta(detalle).subscribe({
             next: () => {
               // Actualiza el total de la venta cuando se agregan los detalles en la base de datos
