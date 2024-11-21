@@ -35,28 +35,44 @@ export class EditarProductoComponent implements OnInit {
       });
     }
 
-    // Obtiene el numero de empleado de la ruta y busca los datos del empleado
-    this.route.params.subscribe({
-      next: (params) => {
-        this.idProducto = params['idProducto'];
-        this.ApiService.getProductoById(this.idProducto).subscribe({
-          next: (res: any) => {
-            this.producto = res;
-            this.editarProductoForm.controls['nombre'].setValue(this.producto.nombre);
-            this.editarProductoForm.controls['precio'].setValue(this.producto.costo);
-          },
-          error: (error) => {
-            this.toastr.error(error.message, 'Ha ocurrido un error');
-          }
-        })
+    // Obtiene el numero de producto de la ruta y busca los datos del producto
+    // this.route.params.subscribe({
+    //   next: (params) => {
+    //     this.idProducto = params['idProducto'];
+    //     this.ApiService.getProductoById(this.idProducto).subscribe({
+    //       next: (res: any) => {
+    //         this.producto = res;
+    //         this.editarProductoForm.controls['nombre'].setValue(this.producto.nombre);
+    //         this.editarProductoForm.controls['precio'].setValue(this.producto.costo);
+    //       },
+    //       error: (error) => {
+    //         this.toastr.error(error.message, 'Ha ocurrido un error');
+    //       }
+    //     })
+    //   },
+    //   error: (error) => {
+    //     this.toastr.error(error.message, 'Ha ocurrido un error');
+    //   }
+    // });
+  }
+
+  buscarProducto(param: number) : void{
+    this.showModal = true
+    this.ApiService.getProductoById(param).subscribe({
+      next: (res: any) => {
+        this.producto = res;
+        console.log(this.producto)
+        this.editarProductoForm.controls['nombre'].setValue(this.producto.nombre);
+        this.editarProductoForm.controls['precio'].setValue(this.producto.costo);
       },
       error: (error) => {
         this.toastr.error(error.message, 'Ha ocurrido un error');
       }
-    });
+    })
+    console.log(this.showModal)
   }
 
-  
+  showModal = true;
   editarProductoForm: FormGroup = new FormGroup({
     nombre: new FormControl('', [Validators.required]),
     precio: new FormControl('', [Validators.required]),
@@ -76,6 +92,7 @@ export class EditarProductoComponent implements OnInit {
       Nombre: this.editarProductoForm.controls['nombre'].value,
       Costo: this.editarProductoForm.controls['precio'].value
     }
+    console.log('DatosP: ', datosProducto)
 
     this.ApiService.updateProducto(this.idProducto, datosProducto).subscribe({
       next: () => {

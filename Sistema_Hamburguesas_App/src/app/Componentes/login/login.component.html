@@ -1,29 +1,30 @@
 <!-- Recordar que en la clase se puede agregar el nombre del estilo "bg-pizza" -->
-<div class="h-full w-full pb-10 flex flex-col items-center justify-center ">
+<div class="h-full w-full pb-10 flex flex-col items-center justify-center bg-gradient-to-b from-white   to-zinc-300">
 
     <!-- Formulario Login -->
-    <form class="relative w-1/4 py-14 flex flex-col items-center bg-black/80 rounded-3xl" [formGroup]="loginForm">
-        <div class="absolute -top-24 w-40 p-1 bg-white rounded-full">
+    <form class="relative w-1/4 py-14 flex flex-col items-center bg-zinc-800 rounded-3xl" [formGroup]="loginForm">
+        <!-- <div class="absolute -top-24 w-40 p-1 bg-white rounded-full">
             <img class="w-full" src="../../../assets/user-icon.svg" alt="user-icon" draggable="false">
-        </div>
+        </div> -->
 
-        <h1 class="mt-8 text-orange-600 text-3xl font-bold my-4 text-center">LOGIN</h1>
-
+        <div class="text-indigo-600 text-3xl font-bold my-4 text-center">LOGIN</div>
+        <hr class="border w-4/5 my-2">
         <!-- Input Numero de Empleado -->
-        <label class="text-orange-400 text-xl font-semibold" for="numEmpleado-input">Numero de Empleado</label>
-        <input id="numEmpleado-input"  class="w-2/3 mt-2 mb-4 px-3 py-1 text-lg border-2 border-transparent focus:border-orange-400 rounded-lg transition-all" type="number" min="1000" max="9999" placeholder="Ingresa tu numero de empleado" formControlName="numEmpleado">
+        <label class="text-indigo-400 text-lg font-semibold" for="numEmpleado-input">Numero de Empleado</label>
+        <input id="numEmpleado-input"  class="w-2/3 mt-2 mb-4 px-3 py-1 text-md border-2 border-transparent focus:border-indigo-400 rounded-lg transition-all" type="number" min="1000" max="9999" placeholder="Ingresa tu numero de empleado" formControlName="numEmpleado">
 
         <!-- Input Contraseña -->
-        <label class="text-orange-400 text-xl font-semibold" for="password-input">Contraseña</label>
+        <label class="text-indigo-400 text-lg font-semibold" for="password-input">Contraseña</label>
         <div class="relative w-full flex justify-center">
-            <input id="password-input" class="w-2/3 mt-2 mb-4 px-3 py-1 text-lg border-2 border-transparent focus:border-orange-400 rounded-lg transition-all"
+            <input id="password-input" class="w-2/3 mt-2 mb-4 px-3 py-1 text-md border-2 border-transparent focus:border-indigo-400 rounded-lg transition-all"
             [type]="mostrarContrasena ? 'text' : 'password'" placeholder="Ingresa tu contraseña" formControlName="contraseña">
-            <img class="absolute right-20 bottom-7 mr-4" src="../../../assets/eye-icon.svg" alt="Mostrar" *ngIf="!mostrarContrasena" (click)="mostrarContrasena = true">
-            <img class="absolute right-20 bottom-7 mr-4" src="../../../assets/closedEye-icon.svg" alt="Ocultar" *ngIf="mostrarContrasena" (click)="mostrarContrasena = false">
-        </div>
+            <mat-icon class="absolute right-16 top-3 text-zinc-500" alt="Mostrar" *ngIf="!mostrarContrasena" (click)="mostrarContrasena = true">visibility</mat-icon>
+            <mat-icon class="absolute right-16 top-3 text-zinc-500"  alt="Ocultar" *ngIf="mostrarContrasena" (click)="mostrarContrasena = false">visibility_off</mat-icon>
+
+          </div>
 
         <!-- Boton Login -->
-        <button id="login-btn" class="mt-6 px-6 py-1 text-orange-500 text-lg font-semibold border border-orange-500 rounded-full enabled:hover:bg-orange-500 enabled:hover:text-white enabled:active:animate-shrink disabled:opacity-70 disabled:cursor-not-allowed" type="submit"  (click)="login()">Login</button>
+        <button id="login-btn" class="mt-6 px-6 py-1 text-indigo-500 text-lg font-semibold border border-indigo-500 rounded-full enabled:hover:bg-indigo-500 enabled:hover:text-white enabled:active:animate-shrink disabled:opacity-70 disabled:cursor-not-allowed" type="submit"  (click)="login()">Entrar</button>
 
         <!-- Spinner -->
         <img id="login-spinner" class="hidden h-8 animate-rotate mt-7" src="../../../assets/spinner-icon.svg" alt="Cargando">

@@ -1,69 +1,93 @@
 <div class="relative h-full w-full flex flex-col">
     <app-header></app-header>
-    
+
     <!-- Contenido Principal -->
     <div class="h-full px-8 py-4 flex flex-col overflow-y-hidden">
-        <div class="w-full mb-4 pr-12 flex gap-10">
-            <h1 class="py-4 text-2xl text-orange-500 font-semibold">ADMINISTRAR USUARIOS</h1>
-            <button class="w-6 mr-4 enabled:active:animate-shrink disabled:opacity-50 disabled:cursor-not-allowed" [disabled]="!loggedUser.admin" routerLink="/agregar_usuario">
-                <img class="w-full" src="../../../assets/add-icon.svg" alt="Agregar">
+
+        <div class="w-full mb-8 mt-10 pr-12 flex gap-10">
+            <div class="text-2xl text-zinc-500 font-semibold my-auto">ADMINISTRAR USUARIOS</div>
+            <button class="my-auto justify-and px-2 flex border rounded-2xl border-2 border-indigo-500 text-md text-indigo-500 hover:text-white hover:bg-indigo-500 " [disabled]="!loggedUser.admin" routerLink="/agregar_usuario">
+                <div class="my-auto ">Agregar</div>
+                <mat-icon class="my-auto">add</mat-icon>
             </button>
         </div>
-        
+
         <!-- Tabla Usuarios -->
-        <div class="h-full flex flex-col overflow-y-scroll">
-            <!-- Headers tabla -->
-            <div class="w-full py-2 flex justify-between">
-                <h1 class="w-1/4 text-xl text-orange-500">Id</h1>
-                <h1 class="w-1/2 text-xl text-orange-500">Nombre</h1>
-                <h1 class="w-1/2 text-xl text-orange-500">Correo</h1>
-                <h1 class="w-1/4 text-xl text-orange-500">Telefono</h1>
-                <h1 class="w-1/6 text-xl text-orange-500">Admin</h1>
-                
-                <!-- Headers botones -->
-                <div class="w-1/6 flex gap-8">
-                    <button class="w-12"></button>
-                    <button class="w-10"></button>
-                </div>
-            </div>
+        <div class="mt-10p mb-30p px-30p overflow-auto border border-zinc-400 rounded">
+          <div class="table-responsive max-h-max sm:max-h-max md:max-h-max lg:max-h-max overflow-visible">
 
-            <!-- Contenedor Usuarios -->
-            <div class="py-2 flex flex-col gap-6 justify-between overflow-y-scroll" *ngIf="loggedUser.admin">
-                <!-- Usuario -->
-                <div class="w-full flex" *ngFor="let usuario of usuarios">
-                    <!-- Datos del usuario -->
-                    <h1 class="w-1/4 text-xl">{{ usuario.numEmpleado }}</h1>
-                    <h1 class="w-1/2 text-xl">{{ usuario.nombre }}</h1>
-                    <h1 class="w-1/2 text-xl">{{ usuario.correo }}</h1>
-                    <h1 class="w-1/4 text-xl">{{ usuario.telefono }}</h1>
-                    <h1 class="w-1/6 text-xl">{{ usuario.admin ? 'True' : 'False' }}</h1>
-    
+              <table mat-table [dataSource]="dataSource" class="w-full" matSort>
+                  <caption></caption>
+                  <ng-container matColumnDef="id">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header style="background-color: rgb(228 228 231)">Id</th>
+                      <td mat-cell *matCellDef="let element">
+                          {{ element.numEmpleado }}
+                      </td>
+                  </ng-container>
+                  <ng-container matColumnDef="nombre">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header style="background-color: rgb(228 228 231)">Nombre</th>
+                      <td mat-cell *matCellDef="let element">
+                          {{ element.nombre }}
+                      </td>
+                  </ng-container>
+                  <ng-container matColumnDef="correo">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header style="background-color: rgb(228 228 231)">Correo Electronico</th>
+                      <td mat-cell *matCellDef="let element">
+                          {{ element.correo }}
+                      </td>
+                  </ng-container>
+                  <ng-container matColumnDef="telefono">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header style="background-color: rgb(228 228 231)">Número Telefonico</th>
+                      <td mat-cell *matCellDef="let element">
+                          {{ element.telefono }}
+                      </td>
+                  </ng-container>
+                  <ng-container matColumnDef="estatus" class="mx-auto">
+                    <th mat-header-cell *matHeaderCellDef style="background-color: rgb(228 228 231)">Admin</th>
+                    <td mat-cell *matCellDef="let element">
+                      <mat-icon *ngIf="element.admin" class="text-green-500">task_alt</mat-icon>
+                      <mat-icon *ngIf="!element.admin" class="text-gray-300">task_alt</mat-icon>
+                    </td>
+                  </ng-container>
 
-                    <!-- Contenedor botones -->
-                    <div class="w-1/6 flex items-center justify-center gap-8">
-                        <button class="w-1/4 enabled:active:animate-shrink disabled:opacity-50 disabled:cursor-not-allowed" [disabled]="!loggedUser.admin"><img class="w-5" src="../../../assets/edit-icon.svg" alt="Editar" (click)="editarUsuario(usuario.numEmpleado)"></button>
-                        <button class="w-1/4 enabled:active:animate-shrink disabled:opacity-50 disabled:cursor-not-allowed" 
-                        [disabled]="!loggedUser.admin" (click)="showModal(usuario.numEmpleado)">
-                            <img class="w-4" src="../../../assets/trash-icon.svg" alt="Eliminar">
-                        </button>
-                    </div>
+                  <ng-container matColumnDef="acciones">
+                      <th mat-header-cell *matHeaderCellDef style="background-color: rgb(228 228 231)"> Acciones</th>
+                      <td mat-cell *matCellDef="let element">
+                        <!-- Contenedor botones -->
+                          <button class="mx-2 text-zinc-400 hover:text-indigo-600" [disabled]="!loggedUser.admin" (click)="editarUsuario(element.numEmpleado)">
+                            <mat-icon>mode_Edit</mat-icon>
+                          </button>
+                          <button class="mx-2 text-zinc-500 hover:text-red-500" [disabled]="!loggedUser.admin" (click)="showModal(element.numEmpleado); cambioFondo()">
+                            <mat-icon>delete</mat-icon>
+                          </button>
+                      </td>
+                  </ng-container>
+                  <tr mat-header-row *matHeaderRowDef="cols; sticky: true"></tr>
+                  <tr mat-row *matRowDef="let row; columns: cols"></tr>
+              </table>
+              <div class="p-32 bg-gris-200 flex justify-center"
+                  *ngIf="usuarios !== null && usuarios.length === 0">
+                  <span class="text-center text-info-700 italic">No se
+                      encuentran registros con los filtros
+                      ingresados</span>
+              </div>
+          </div>
+          <!-- <mat-paginator [pageSizeOptions]="[15,30,50,100]" showFirstLastButtons
+              aria-label="Select page of periodic elements">
+          </mat-paginator> -->
+      </div>
 
-                </div>
-            </div>
 
-        </div>
-
-               
         <!-- Contenedor modal -->
         <div class="absolute left-0 top-0 w-full h-full flex items-center justify-center bg-black/70" *ngIf="modalEliminar">
             <!-- Modal -->
-            <div class="px-12 py-8 flex flex-col items-center justify-between gap-10 bg-background/80 rounded-3xl">
+            <div class="px-12 py-8 flex flex-col items-center justify-between gap-10 bg-zinc-400 rounded-3xl">
                 <h1 class="text-3xl text-stone-50 font-semibold">¿Deseas eliminar al usuario {{ numEmpleadoEliminar }}?</h1>
                 <div class="flex gap-8 text-2xl text-white font-semibold">
                     <button class="px-5 py-2 rounded-full bg-red-500 hover:bg-red-600 active:animate-shrink" (click)="deleteUsuario()">
                         Confirmar
                     </button>
-                    <button class="px-8 py-2 rounded-full bg-orange-500 hover:bg-orange-600 active:animate-shrink" (click)="modalEliminar = false; numEmpleadoEliminar = -1">
+                    <button class="px-8 py-2 rounded-full bg-indigo-500 hover:bg-indigo-600 active:animate-shrink" (click)="modalEliminar = false; numEmpleadoEliminar = -1">
                         Cancelar
                     </button>
                 </div>

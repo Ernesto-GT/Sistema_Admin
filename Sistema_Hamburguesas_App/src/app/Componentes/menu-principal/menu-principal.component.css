@@ -1,0 +1,27 @@
+.boton-tomar-pedido {
+  background-image: url('/assets/images/Tomar_Pedido.jpg');
+  background-size: cover; /* Ajusta la imagen para cubrir el botón */
+  background-position: center; /* Centra la imagen */
+  background-repeat: no-repeat; /* Evita que la imagen se repita */
+}
+
+.boton-admin-productos {
+  background-image: url('/assets/images/Administrar_Productos.jpg');
+  background-size: cover; /* Ajusta la imagen para cubrir el botón */
+  background-position: center; /* Centra la imagen */
+  background-repeat: no-repeat; /* Evita que la imagen se repita */
+}
+
+.boton-reporte-ventas {
+  background-image: url('/assets/images/Reporte_Ventas.webp');
+  background-size: cover; /* Ajusta la imagen para cubrir el botón */
+  background-position: center; /* Centra la imagen */
+  background-repeat: no-repeat; /* Evita que la imagen se repita */
+}
+
+.boton-admin-usuarios {
+  background-image: url('/assets/images/Administrar_Usuarios.jpg');
+  background-size: cover; /* Ajusta la imagen para cubrir el botón */
+  background-position: center; /* Centra la imagen */
+  background-repeat: no-repeat; /* Evita que la imagen se repita */
+}

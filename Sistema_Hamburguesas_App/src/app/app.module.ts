@@ -20,6 +20,14 @@ import { ReporteVentasComponent } from './Componentes/reporte-ventas/reporte-ven
 import { ProductosComponent } from './Componentes/productos/productos.component';
 import { AgregarProductoComponent } from './Componentes/agregar-producto/agregar-producto.component';
 import { EditarProductoComponent } from './Componentes/editar-producto/editar-producto.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatPaginatorIntl } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+import { MatPaginatorModule } from '@angular/material/paginator';
+
 
 @NgModule({
   declarations: [
@@ -40,6 +48,12 @@ import { EditarProductoComponent } from './Componentes/editar-producto/editar-pr
   imports: [
     BrowserModule,
     AppRoutingModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule,
+    MatSortModule,
+    MatPaginatorModule,
+    MatTableModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
@@ -54,8 +68,10 @@ import { EditarProductoComponent } from './Componentes/editar-producto/editar-pr
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS, useClass: CustomInterceptor,
-    multi: true
-  }],
+    multi: true,
+
+  },EditarProductoComponent,
+  { provide: MatPaginatorIntl }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
